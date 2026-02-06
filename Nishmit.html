@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Admin - DSSSB Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    body { font-family: 'Poppins', sans-serif; background: #0f172a; color: #e2e8f0; padding: 15px; margin: 0; }
+    .container { max-width: 700px; margin: 0 auto; }
+    h2 { text-align: center; color: #38bdf8; margin-bottom: 20px; font-size: 22px; }
+    
+    .step-box { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #334155; }
+    .step-title { color: #fbbf24; font-weight: 600; margin-bottom: 15px; display: block; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+    
+    textarea { width: 100%; height: 150px; background: #020617; color: #4ade80; border: 1px solid #334155; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 11px; resize: vertical; }
+    input, select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; margin-bottom: 10px; outline: none; }
+    input:focus, select:focus { border-color: #38bdf8; }
+    
+    .btn { background: #3b82f6; color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 14px; }
+    .btn-green { background: #22c55e; }
+    .btn-copy { background: #f59e0b; margin-top: 10px; display: none; }
+    
+    .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
+    .tab { flex: 1; padding: 8px; background: #334155; text-align: center; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    .tab.active { background: #38bdf8; color: #000; font-weight: 600; }
+    
+    .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>⚡ Smart Data Manager</h2>
+
+    <div class="step-box">
+        <span class="step-title">Step 1: Paste Current `data.js` Code</span>
+        <textarea id="oldCode" placeholder="Open data.js from GitHub, copy everything, and paste here..."></textarea>
+    </div>
+
+    <div class="step-box">
+        <span class="step-title">Step 2: What do you want to add?</span>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('test')">New Test</div>
+            <div class="tab" onclick="switchTab('notice')">Announcement</div>
+            <div class="tab" onclick="switchTab('pdf')">PDF Link</div>
+        </div>
+
+        <div id="formTest">
+            <input type="text" id="tTitle" placeholder="Test Title (e.g. MTS Mock 05)">
+            <select id="tCat">
+                <option value="mts-full">MTS Full Mock</option>
+                <option value="asst-supt">Asst. Superintendent</option>
+                <option value="hindi">Hindi</option>
+                <option value="english">English</option>
+                <option value="maths">Maths</option>
+                <option value="gk">GK / GS</option>
+            </select>
+            <input type="text" id="tUrl" placeholder="Test URL (Google Form Link)">
+            <button class="btn" onclick="processUpdate('test')">Generate New File Code</button>
+        </div>
+
+        <div id="formNotice" class="hidden">
+            <input type="text" id="nText" placeholder="New Marquee Text...">
+            <button class="btn" onclick="processUpdate('notice')">Update Announcement</button>
+        </div>
+
+        <div id="formPdf" class="hidden">
+            <input type="text" id="pLink" placeholder="New PDF Drive Link...">
+            <button class="btn" onclick="processUpdate('pdf')">Update PDF Button</button>
+        </div>
+    </div>
+
+    <div class="step-box" id="resultBox" style="display:none;">
+        <span class="step-title">Step 3: Copy & Replace in GitHub</span>
+        <textarea id="newCode" readonly></textarea>
+        <button class="btn btn-copy" id="copyBtn" onclick="copyResult()"><i class="fas fa-copy"></i> Copy Full Code</button>
+    </div>
+
+</div>
+
+<script>
+    function switchTab(t) {
+        document.querySelectorAll('.tab').forEach(e => e.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById('formTest').classList.add('hidden');
+        document.getElementById('formNotice').classList.add('hidden');
+        document.getElementById('formPdf').classList.add('hidden');
+        
+        if(t==='test') document.getElementById('formTest').classList.remove('hidden');
+        if(t==='notice') document.getElementById('formNotice').classList.remove('hidden');
+        if(t==='pdf') document.getElementById('formPdf').classList.remove('hidden');
+    }
+
+    function processUpdate(type) {
+        let code = document.getElementById('oldCode').value;
+        if(!code.includes("testDatabase") || !code.includes("appConfig")) {
+            alert("❌ Invalid Code! Please paste the full content of 'data.js'.");
+            return;
+        }
+
+        if(type === 'test') {
+            const title = document.getElementById('tTitle').value;
+            const cat = document.getElementById('tCat').value;
+            const url = document.getElementById('tUrl').value;
+            if(!title || !url) { alert("Fill all fields"); return; }
+            
+            const id = cat.split('-')[0] + '_' + Math.floor(Math.random()*9999);
+            const newObj = `
+  {
+    id: "${id}",
+    title: "${title}",
+    category: "${cat}",
+    url: "${url}",
+    attempts: 0
+  }`;
+            // Logic to insert before the last closing bracket of array
+            const insertPos = code.lastIndexOf("]");
+            if(insertPos > -1) {
+                code = code.substring(0, insertPos) + "," + newObj + "\n" + code.substring(insertPos);
+            }
+        }
+
+        if(type === 'notice') {
+            const txt = document.getElementById('nText').value;
+            if(!txt) return;
+            code = code.replace(/announcement:\s*".*?"/, `announcement: "${txt}"`);
+        }
+
+        if(type === 'pdf') {
+            const lnk = document.getElementById('pLink').value;
+            if(!lnk) return;
+            code = code.replace(/pdfLink:\s*".*?"/, `pdfLink: "${lnk}"`);
+        }
+
+        document.getElementById('newCode').value = code;
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('copyBtn').style.display = 'block';
+        
+        // Auto scroll to result
+        document.getElementById('resultBox').scrollIntoView({behavior: "smooth"});
+    }
+
+    function copyResult() {
+        const c = document.getElementById('newCode');
+        c.select();
+        document.execCommand("copy");
+        alert("✅ Code Copied! Now paste it in GitHub data.js");
+    }
+</script>
+
+</body>
+</html>
