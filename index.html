@@ -5,7 +5,7 @@
 <title>DSSSB Smart Notes – Ultimate V3</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#4361ee">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -17,17 +17,22 @@
   --border: #e5e7eb; --header-grad: linear-gradient(135deg, #4361ee, #3a0ca3);
   --tg-color: #0088cc; --yt-color: #ff0000; --pdf-color: #ff9800;
   --nav-height: 65px;
+  /* New variables for 3D buttons */
+  --btn-shadow: #cbd5e1;
+  --btn-shadow-active: #94a3b8;
 }
 [data-theme="dark"] {
   --primary: #4cc9f0; --primary-dark: #4361ee; --bg: #111827;
   --card-bg: #1f2937; --text-main: #f9fafb; --text-sub: #9ca3af;
   --border: #374151; --header-grad: linear-gradient(135deg, #1e1e2e, #2d2d44);
+  --btn-shadow: #111827; 
+  --btn-shadow-active: #000;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text-main); padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.3s, color 0.3s; }
 
 /* HEADER */
-.header { background: var(--header-grad); color: #fff; padding: 25px 20px 80px; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; position: relative; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.header { background: var(--header-grad); color: #fff; padding: 25px 20px 85px; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; position: relative; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
 .header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
 .countdown-pill { background: rgba(0,0,0,0.25); font-size: 10px; padding: 3px 10px; border-radius: 12px; margin-left: 5px; vertical-align: middle; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
@@ -38,8 +43,8 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 .icon-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 38px; height: 38px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; backdrop-filter: blur(5px); transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); }
 .icon-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
 
-/* NEW SOCIAL GRID (SHANDAAR BUTTONS) */
-.social-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 0 20px; margin-top: -50px; position: relative; z-index: 20; margin-bottom: 20px; }
+/* SOCIAL GRID */
+.social-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 0 20px; margin-top: -55px; position: relative; z-index: 20; margin-bottom: 20px; }
 .social-card { background: var(--card-bg); border-radius: 18px; padding: 12px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border: 1px solid var(--border); transition: transform 0.2s; text-decoration: none; display: block; position: relative; overflow: hidden; }
 .social-card:active { transform: scale(0.96); }
 .social-icon { font-size: 24px; margin-bottom: 5px; display: block; }
@@ -47,26 +52,84 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 .sc-tg .social-icon { color: var(--tg-color); }
 .sc-yt .social-icon { color: var(--yt-color); }
 .sc-pdf .social-icon { color: var(--pdf-color); }
-/* Shine Effect */
-.social-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-25deg); transition: 0.5s; }
-.social-card:hover::after { left: 150%; transition: 0.7s; }
 
-/* ADVERTISING / ANNOUNCEMENT */
+/* PROMO BANNER */
 .promo-banner { background: var(--card-bg); margin: 0 20px 15px; padding: 12px; border-radius: 16px; border: 2px dashed var(--primary); display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: hidden; position: relative; }
 .promo-icon-box { background: rgba(67, 97, 238, 0.1); color: var(--primary); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
 .marquee-wrapper { flex: 1; overflow: hidden; white-space: nowrap; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
 .marquee-content { display: inline-block; padding-left: 100%; animation: scroll 15s linear infinite; font-size: 13px; font-weight: 500; color: var(--text-main); }
 @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* SEARCH & FILTERS */
+/* SEARCH */
 .search-container { padding: 0 20px; }
 .search-box { background: var(--card-bg); padding: 12px 15px; border-radius: 16px; display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); transition: 0.3s; }
 .search-box:focus-within { border-color: var(--primary); box-shadow: 0 4px 20px rgba(67, 97, 238, 0.2); }
 .search-box input { width: 100%; padding: 0; border: none; background: transparent; outline: none; font-size: 14px; color: var(--text-main); margin-left: 10px; font-family: inherit; }
-.filters-wrapper { padding: 15px 20px 5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+
+/* 🔥 NEW 3D FILTERS WRAPPER 🔥 */
+.filters-wrapper { padding: 15px 20px 20px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
 .filters-wrapper::-webkit-scrollbar { display: none; }
-.filter-btn { padding: 8px 18px; border-radius: 25px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text-sub); font-weight: 500; font-size: 12px; margin-right: 8px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 10px rgba(67, 97, 238, 0.4); }
+
+/* 3D BASE BUTTON STYLE */
+.filter-btn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text-sub);
+  font-weight: 700;
+  font-size: 12px;
+  margin-right: 12px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  
+  /* 3D Effect Properties */
+  box-shadow: 0 4px 0 var(--btn-shadow); 
+  transform: translateY(0);
+  border: 1px solid var(--border);
+  position: relative;
+  top: 0;
+}
+
+/* 3D PRESS EFFECT */
+.filter-btn:active, .filter-btn.active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--btn-shadow);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* 🏆 SPECIAL 3D BUTTON: MTS MOCK (RED/PINK THEME) */
+.filter-btn[data-filter="mts-full"] {
+  background: linear-gradient(135deg, #ff5252, #ff1744);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 0 #b91c1c; /* Dark Red Shadow */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.filter-btn[data-filter="mts-full"]:active, 
+.filter-btn[data-filter="mts-full"].active {
+  background: linear-gradient(135deg, #ff5252, #ff1744);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #b91c1c;
+  color: white;
+}
+
+/* 👮 SPECIAL 3D BUTTON: ASST. SUPT (ROYAL/POLICE THEME) */
+.filter-btn[data-filter="asst-supt"] {
+  background: linear-gradient(135deg, #4361ee, #304ffe);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 0 #1e3a8a; /* Dark Blue Shadow */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.filter-btn[data-filter="asst-supt"]:active, 
+.filter-btn[data-filter="asst-supt"].active {
+  background: linear-gradient(135deg, #4361ee, #304ffe);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #1e3a8a;
+  color: white;
+}
 
 /* CARDS & GENERAL */
 .section { padding: 10px 20px; min-height: 50vh; }
@@ -85,7 +148,7 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 .action-icon.done-active { color: var(--success); }
 @keyframes heartBeat { 0% {transform: scale(1);} 50% {transform: scale(1.3);} 100% {transform: scale(1);} }
 
-/* MODALS & UTILS SAME AS BEFORE BUT POLISHED */
+/* MODALS & UTILS */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
 .modal { background: var(--card-bg); width: 100%; max-width: 340px; border-radius: 28px; padding: 25px; text-align: center; animation: slideUp 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 @keyframes slideUp { from {transform: translateY(30px); opacity:0;} to {transform: translateY(0); opacity:1;} }
@@ -102,7 +165,7 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 .fab-random { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; background: var(--text-main); color: var(--card-bg); border-radius: 50%; box-shadow: 0 8px 25px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 22px; z-index: 90; cursor: pointer; transition: 0.3s; }
 .fab-random:active { transform: scale(0.9) rotate(90deg); }
 
-/* Other utils from prev code kept standard */
+/* Other utils */
 .stat-grid { display: flex; gap: 10px; margin: 20px 0; }
 .stat-box { flex: 1; background: var(--bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border); }
 .stat-num { font-size: 24px; font-weight: 700; color: var(--primary); }
@@ -162,7 +225,6 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 <div class="search-container">
   <div class="search-box"><i class="fas fa-search" style="color:var(--text-sub)"></i><input type="text" id="searchInput" placeholder="Search tests, notes..."></div>
 </div>
-
 <div class="filters-wrapper">
   <button class="filter-btn active" data-filter="all">All</button>
   <button class="filter-btn" data-filter="mts-full">🎯 MTS Mock</button>
@@ -176,6 +238,7 @@ body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); col
 
 <div class="section" id="mainContainer"></div>
 <div class="fab-random" onclick="pickRandomTest()"><i class="fas fa-dice"></i></div>
+
 <div class="modal-overlay" id="toolsModal">
   <div class="modal">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
@@ -298,12 +361,11 @@ let timerInterval;
 let timeLeft = 25 * 60;
 let isRunning = false;
 
-// --- INITIALIZATION (MODIFIED FOR DATA.JS CONNECTION) ---
+// --- INITIALIZATION ---
 function init(){
   const h = new Date().getHours();
   document.getElementById("greeting").innerText = h<12?"Good Morning ☀️":h<18?"Good Afternoon 🌤️":"Good Evening 🌙";
   
-  // 🔥 IMPORTANT: Connect to Admin/Data.js Config
   if(typeof appConfig !== 'undefined'){
       if(appConfig.announcement) {
           document.getElementById("promoText").innerText = appConfig.announcement;
@@ -326,9 +388,7 @@ function init(){
   updateStats();
 }
 
-// --- MODIFIED FUNCTION: REAL PDF DOWNLOAD ---
 function downloadPDF() {
-    // 🔥 IMPORTANT: Use link from Admin/Data.js
     if(typeof appConfig !== 'undefined' && appConfig.pdfLink){
         showToast("⬇️ Opening PDF...");
         confetti({ particleCount: 150, spread: 60, origin: { y: 0.6 } });
@@ -548,19 +608,16 @@ function updateStats(){
     document.getElementById("statCompleted").innerText = doneTests.length;
     document.getElementById("statSaved").innerText = savedTests.length;
     
-    // Level Logic
     const cnt = doneTests.length; const b = document.getElementById("userLevelBadge");
     if(cnt<5){ b.innerText="BEGINNER"; b.style.background="#9ca3af"; }
     else if(cnt<15){ b.innerText="SCHOLAR"; b.style.background="#3b82f6"; }
     else { b.innerText="MASTER"; b.style.background="#f59e0b"; }
 
-    // Chart
     const total = typeof testDatabase!=='undefined' ? Math.max(testDatabase.length, 1) : 100;
     const pct = Math.round((cnt / total) * 100) || 0;
     const visual = document.getElementById("visualChartContainer");
     visual.innerHTML = `<div class="pie-chart" style="background: conic-gradient(var(--primary) ${pct}%, var(--border) 0%)" data-percent="${pct}%"></div><div style="font-size:12px; color:var(--text-sub);">Overall Completion</div>`;
 
-    // Subjects
     const sub = {};
     doneTests.forEach(d => { const t = typeof testDatabase!=='undefined' ? testDatabase.find(x=>x.id===d.id) : null; if(t) sub[t.category] = (sub[t.category]||0)+1; });
     const list = document.getElementById("subjectProgressList"); list.innerHTML = '';
@@ -579,7 +636,6 @@ function updateStats(){
         </div>`;
     });
 
-    // Timeline
     const tl = document.getElementById("historyTimeline"); tl.innerHTML = '';
     [...doneTests].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,15).forEach(d=>{
         const t = typeof testDatabase!=='undefined' ? testDatabase.find(x=>x.id===d.id) : null;
@@ -637,7 +693,6 @@ function pickRandomTest() {
     }
 }
 
-// Filter Clicks
 document.querySelectorAll(".filter-btn").forEach(b => {
   b.addEventListener("click", () => {
     document.querySelectorAll(".filter-btn").forEach(x => x.classList.remove("active"));
