@@ -1,14 +1,77 @@
 // ==========================================
 // 🚀 DSSSB SMART NOTES - DATA FILE
-// Updated: 06/02/2026, 21:02:01
+// Updated: 06/02/2026, 22:00:37
 // ==========================================
 
 const appConfig = {
-    "announcement": "📢 Welcome to DSSSB SMART NOTES! | 🔥 MTS Admit Card Update | 📝 Download Free PDF Notes Now!",
+    "announcement": "📢 Welcome to DSSSB SMART NOTES! | 🔥 MTS Admit Card Out | 📝 Download Free PDF Notes Now!",
     "pdfLink": "https://t.me/Dsssbsmartnotes/25"
 };
 
 const testDatabase = [
+    {
+        "id": "t_1770395368997",
+        "category": "hindi",
+        "title": "DSSSB HINDI PYQ_25_26",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/Hset01.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770395168586",
+        "category": "english",
+        "title": "DSSSB_ENG_PYQ_25/26",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/english.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770395073747",
+        "category": "maths",
+        "title": "DSSSB Maths PYQ – CBT (Nov 25)",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/maths-pyq-nov25.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770395029747",
+        "category": "english",
+        "title": "DSSSB ENG PYQ_2025_26",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/english.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770394952169",
+        "category": "gk",
+        "title": "DSSSB GK PYQ_2025_26",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/DSSSB%20gk%20pyq.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770394900065",
+        "category": "english",
+        "title": "DSSSB ENG PYQ",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/eng01-10-25p12ndsft.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770394819691",
+        "category": "maths",
+        "title": "MATH PYQ DASS_IV",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/Math.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770394673449",
+        "category": "english",
+        "title": "ENGLISH PYQ TEST – DASS-IV (03 Nov | 2nd Shift)",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/eng-pyq-01.html",
+        "attempts": "0"
+    },
+    {
+        "id": "t_1770394549838",
+        "category": "english",
+        "title": "CGL Mains English section(2026)",
+        "url": "https://dsssbsmartnotes.github.io/Dsssb-Tests/cglengmains25.html",
+        "attempts": "0"
+    },
     {
         "id": "t_1770391851913",
         "category": "english",
@@ -24,80 +87,17 @@ const testDatabase = [
         "attempts": "15.2k"
     },
     {
-        "id": "mts_02",
-        "category": "mts-full",
-        "title": "MTS Full Length Mock Test - 02 (Hard)",
-        "url": "https://google.com",
-        "attempts": "8.5k"
-    },
-    {
         "id": "as_01",
         "category": "asst-supt",
-        "title": "Asst. Supt. Previous Year Paper (2019)",
+        "title": "Asst. Supt. Full Mock (pyq based)",
         "url": "https://google.com",
         "attempts": "10.1k"
     },
     {
-        "id": "as_02",
-        "category": "asst-supt",
-        "title": "Prison Rule & Act - Special Quiz",
-        "url": "https://google.com",
-        "attempts": "4.2k"
-    },
-    {
-        "id": "eng_01",
-        "category": "english",
-        "title": "English Grammar: Noun & Pronoun",
-        "url": "https://google.com",
-        "attempts": "5.5k"
-    },
-    {
         "id": "eng_02",
         "category": "english",
-        "title": "Vocab Booster: Synonyms & Antonyms",
-        "url": "https://google.com",
+        "title": "Vocab Booster: Synonyms (dsssb 2025)",
+        "url": "https://dsssbsmartnotes.github.io/dsssb-mts-cbt/S.html",
         "attempts": "3.2k"
-    },
-    {
-        "id": "reas_01",
-        "category": "reasoning",
-        "title": "Reasoning: Coding-Decoding Test",
-        "url": "https://google.com",
-        "attempts": "6.7k"
-    },
-    {
-        "id": "gk_01",
-        "category": "gk",
-        "title": "History: 1857 Revolt & Freedom Struggle",
-        "url": "https://google.com",
-        "attempts": "9.1k"
-    },
-    {
-        "id": "gk_02",
-        "category": "gk",
-        "title": "Polity: Fundamental Rights (Mull Adhikar)",
-        "url": "https://google.com",
-        "attempts": "7.4k"
-    },
-    {
-        "id": "math_01",
-        "category": "maths",
-        "title": "Maths: Percentage (Pratishat) Class 1",
-        "url": "https://google.com",
-        "attempts": "4.8k"
-    },
-    {
-        "id": "math_02",
-        "category": "maths",
-        "title": "Maths: Profit & Loss Practice",
-        "url": "https://google.com",
-        "attempts": "3.9k"
-    },
-    {
-        "id": "hin_01",
-        "category": "hindi",
-        "title": "Hindi: Sandhi & Samas Test",
-        "url": "https://google.com",
-        "attempts": "6.2k"
     }
 ];
