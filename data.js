@@ -1,120 +1,116 @@
 // ==========================================
-// ⚙️ CONFIGURATION (Notice & PDF)
+// 🚀 DSSSB SMART NOTES - DATA CONFIGURATION
 // ==========================================
+
+// 1. App Settings (Announcement & PDF)
 const appConfig = {
-    // जो लाइन ऊपर चलती है (Marquee)
-    announcement: "📢 Welcome! New DSSSB MTS Mock Tests Added. Join Telegram for Daily PDF Notes! 🚀 Exam Date Announced.",
+    // Ye line upar chalti hui dikhegi (Marquee)
+    announcement: "📢 Welcome to DSSSB SMART NOTES! | 🔥 MTS Admit Card Update | 📝 Download Free PDF Notes Now!",
     
-    // PDF Download Button का लिंक
-    pdfLink: "https://t.me/YOUR_TELEGRAM_LINK_HERE" 
+    // 'Free PDF' button dabane par ye link khulega (Google Drive ya Telegram link dalein)
+    pdfLink: "https://t.me/Dsssbsmartnotes/25" 
 };
 
-// ==========================================
-// 📚 TEST DATABASE
-// ==========================================
+// 2. Test Database (Saare Tests yahan add karein)
+// Categories available: 'mts-full', 'asst-supt', 'english', 'reasoning', 'gk', 'maths', 'hindi'
+
 const testDatabase = [
-  // --- MTS FULL MOCK TESTS ---
-  {
-    id: "mts_01",
-    title: "DSSSB MTS Full Mock Test - 01",
-    category: "mts-full",
-    url: "https://forms.gle/EXAMPLE_LINK_1",
-    attempts: 1250
-  },
-  {
-    id: "mts_02",
-    title: "DSSSB MTS Full Mock Test - 02",
-    category: "mts-full",
-    url: "https://forms.gle/EXAMPLE_LINK_2",
-    attempts: 980
-  },
-  {
-    id: "mts_03",
-    title: "DSSSB MTS Full Mock Test - 03 (Live)",
-    category: "mts-full",
-    url: "https://forms.gle/EXAMPLE_LINK_3",
-    attempts: 2100
-  },
+    
+    // --- 🎯 MTS MOCK TESTS ---
+    {
+        id: "mts_01", 
+        category: "mts-full",
+        title: "MTS Full Length Mock Test - 01",
+        url: "https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE", // Apna test link yahan dalein
+        attempts: "15.2k"
+    },
+    {
+        id: "mts_02",
+        category: "mts-full",
+        title: "MTS Full Length Mock Test - 02 (Hard)",
+        url: "https://google.com",
+        attempts: "8.5k"
+    },
 
-  // --- ASSISTANT SUPERINTENDENT ---
-  {
-    id: "as_01",
-    title: "Asst. Supt. - Previous Year Paper 2019",
-    category: "asst-supt",
-    url: "https://forms.gle/EXAMPLE_LINK_4",
-    attempts: 3400
-  },
-  {
-    id: "as_02",
-    title: "Asst. Supt. Mock - Jail Rules Special",
-    category: "asst-supt",
-    url: "https://forms.gle/EXAMPLE_LINK_5",
-    attempts: 850
-  },
+    // --- 👮 ASST. SUPERINTENDENT ---
+    {
+        id: "as_01",
+        category: "asst-supt",
+        title: "Asst. Supt. Previous Year Paper (2019)",
+        url: "https://google.com",
+        attempts: "10.1k"
+    },
+    {
+        id: "as_02",
+        category: "asst-supt",
+        title: "Prison Rule & Act - Special Quiz",
+        url: "https://google.com",
+        attempts: "4.2k"
+    },
 
-  // --- HINDI ---
-  {
-    id: "hin_01",
-    title: "Hindi Grammar: Sandhi & Samas",
-    category: "hindi",
-    url: "https://forms.gle/EXAMPLE_LINK_6",
-    attempts: 560
-  },
-  {
-    id: "hin_02",
-    title: "Hindi Vocabulary (Vilom & Paryay)",
-    category: "hindi",
-    url: "https://forms.gle/EXAMPLE_LINK_7",
-    attempts: 430
-  },
+    // --- 🇬🇧 ENGLISH ---
+    {
+        id: "eng_01",
+        category: "english",
+        title: "English Grammar: Noun & Pronoun",
+        url: "https://google.com",
+        attempts: "5.5k"
+    },
+    {
+        id: "eng_02",
+        category: "english",
+        title: "Vocab Booster: Synonyms & Antonyms",
+        url: "https://google.com",
+        attempts: "3.2k"
+    },
 
-  // --- ENGLISH ---
-  {
-    id: "eng_01",
-    title: "English: Active/Passive Voice Masterclass",
-    category: "english",
-    url: "https://forms.gle/EXAMPLE_LINK_8",
-    attempts: 1120
-  },
+    // --- 🧠 REASONING ---
+    {
+        id: "reas_01",
+        category: "reasoning",
+        title: "Reasoning: Coding-Decoding Test",
+        url: "https://google.com",
+        attempts: "6.7k"
+    },
 
-  // --- GK / GS ---
-  {
-    id: "gk_01",
-    title: "Current Affairs: Last 6 Months (Jan-June)",
-    category: "gk",
-    url: "https://forms.gle/EXAMPLE_LINK_9",
-    attempts: 5600
-  },
-  {
-    id: "gk_02",
-    title: "Delhi GK Special for DSSSB",
-    category: "gk",
-    url: "https://forms.gle/EXAMPLE_LINK_10",
-    attempts: 2300
-  },
-  {
-    id: "gk_03",
-    title: "Indian Polity: Top 100 Articles",
-    category: "gk",
-    url: "https://forms.gle/EXAMPLE_LINK_11",
-    attempts: 1500
-  },
+    // --- 🌍 GK / GENERAL AWARENESS ---
+    {
+        id: "gk_01",
+        category: "gk",
+        title: "History: 1857 Revolt & Freedom Struggle",
+        url: "https://google.com",
+        attempts: "9.1k"
+    },
+    {
+        id: "gk_02",
+        category: "gk",
+        title: "Polity: Fundamental Rights (Mull Adhikar)",
+        url: "https://google.com",
+        attempts: "7.4k"
+    },
 
-  // --- MATHS ---
-  {
-    id: "math_01",
-    title: "Maths: Percentage & Profit Loss",
-    category: "maths",
-    url: "https://forms.gle/EXAMPLE_LINK_12",
-    attempts: 670
-  },
+    // --- 📐 MATHS ---
+    {
+        id: "math_01",
+        category: "maths",
+        title: "Maths: Percentage (Pratishat) Class 1",
+        url: "https://google.com",
+        attempts: "4.8k"
+    },
+    {
+        id: "math_02",
+        category: "maths",
+        title: "Maths: Profit & Loss Practice",
+        url: "https://google.com",
+        attempts: "3.9k"
+    },
 
-  // --- REASONING ---
-  {
-    id: "reas_01",
-    title: "Reasoning: Syllogism & Venn Diagram",
-    category: "reasoning",
-    url: "https://forms.gle/EXAMPLE_LINK_13",
-    attempts: 1200
-  }
+    // --- 🇮🇳 HINDI ---
+    {
+        id: "hin_01",
+        category: "hindi",
+        title: "Hindi: Sandhi & Samas Test",
+        url: "https://google.com",
+        attempts: "6.2k"
+    }
 ];
