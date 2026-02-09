@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DSSSB Sectional Mock Test - English</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+/* =========================
+   CORE VARIABLES & THEME
+   ========================= */
+:root {
+  --primary: #2196f3;
+  --primary-dark: #1976d2;
+  --success: #2e7d32;
+  --danger: #c62828;
+  --warning: #f9a825;
+  
+  --bg-body: #f5f7fa;
+  --bg-card: #ffffff;
+  --text-main: #333333;
+  --text-muted: #555555;
+  --border-color: #dddddd;
+  --header-bg: #ffffff;
+  --section-bar-bg: #e3f2fd;
+  --opt-hover: #f0f7ff;
+  --opt-sel-bg: #e3f2fd;
+  --palette-bg: #ffffff;
+  --zoom-bg: rgba(255, 255, 255, 0.95);
+  
+  --font-base: 16px;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+  --primary: #64b5f6;
+  --primary-dark: #42a5f5;
+  --success: #66bb6a;
+  --danger: #ef5350;
+  
+  --bg-body: #121212;
+  --bg-card: #1e1e1e;
+  --text-main: #e0e0e0;
+  --text-muted: #b0b0b0;
+  --border-color: #333333;
+  --header-bg: #1e1e1e;
+  --section-bar-bg: #263238;
+  --opt-hover: #2c3e50;
+  --opt-sel-bg: #1565c0;
+  --palette-bg: #1e1e1e;
+  --zoom-bg: rgba(0, 0, 0, 0.9);
+}
+
+html, body {
+  width: 100%; margin: 0; padding: 0;
+  overflow-x: hidden; font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg-body); color: var(--text-main);
+  height: 100%;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* =========================
+   NEW SOLUTION STYLES
+   ========================= */
+.solution-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+.hindi-expl {
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    color: #333;
+}
+body.dark-mode .hindi-expl {
+    background-color: #3e3820;
+    color: #e0e0e0;
+}
+
+.fact-box {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 15px;
+    color: #155724;
+}
+body.dark-mode .fact-box {
+    background-color: #1b3320;
+    border-color: #2e5c36;
+    color: #a8d6b0;
+}
+.fact-box strong {
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+/* =========================
+   LAYOUT GRID
+   ========================= */
+body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto; 
+  height: 100vh;
+}
+
+/* =========================
+   SCREENS
+   ========================= */
+.full-screen-overlay {
+  position: fixed; inset: 0;
+  background: var(--bg-body);
+  z-index: 2000;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 20px;
+}
+.start-card {
+  background: var(--bg-card);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  width: 100%; max-width: 500px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.inst-list { text-align: left; margin: 15px 0; font-size: 14px; line-height: 1.6; color: var(--text-main); }
+.inst-list li { margin-bottom: 8px; }
+
+.start-input {
+  width: 90%; padding: 12px; margin: 20px 0;
+  border: 2px solid var(--border-color); border-radius: 6px;
+  font-size: 16px; background: var(--bg-body); color: var(--text-main);
+}
+.primary-btn {
+  background: var(--primary); color: #fff;
+  border: none; padding: 12px 30px;
+  font-size: 16px; font-weight: bold;
+  border-radius: 6px; cursor: pointer;
+  transition: 0.2s; width: 100%; margin-top: 10px;
+}
+.primary-btn:disabled { background: #999; cursor: not-allowed; }
+.secondary-btn {
+    background: transparent; color: var(--text-muted); border: 2px solid var(--border-color);
+    margin-top: 10px; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold;
+}
+
+/* =========================
+   HEADER & NAV
+   ========================= */
+header {
+  background: var(--header-bg); padding: 10px 15px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 20;
+  border-bottom: 1px solid var(--border-color);
+}
+.brand { font-weight: bold; font-size: 1.1rem; color: var(--primary); }
+.tools { display: flex; gap: 8px; }
+.tool-btn {
+  background: var(--bg-body); border: 1px solid var(--border-color); 
+  padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;
+  font-weight: 600; color: var(--text-main);
+}
+
+/* SUB-HEADER (Subject Name) */
+#subHeader {
+    background: var(--section-bar-bg); padding: 10px 15px;
+    font-weight: bold; color: var(--primary-dark);
+    border-bottom: 1px solid var(--border-color);
+    text-align: center; font-size: 1.1em;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+#mainArea {
+  padding: 10px; overflow-y: auto; position: relative;
+  padding-bottom: 80px; display: none;
+}
+.card {
+  background: var(--bg-card); padding: 16px; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px;
+  font-size: var(--font-base); border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+.passage-box {
+  background: var(--bg-body); border-left: 4px solid var(--primary);
+  padding: 10px; margin-bottom: 15px; font-size: 0.95em;
+  color: var(--text-main); max-height: 200px; overflow-y: auto;
+  border: 1px solid var(--border-color);
+}
+
+/* IMAGE STYLING */
+.q-img {
+    max-width: 100%; height: auto; border: 1px solid var(--border-color); 
+    border-radius: 4px; margin: 10px 0; cursor: zoom-in; transition: transform 0.2s; display: block;
+}
+.q-img:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+.opt {
+  border: 1px solid var(--border-color); padding: 12px 15px;
+  margin: 8px 0; border-radius: 6px; cursor: pointer;
+  transition: background 0.15s; display: flex; align-items: center;
+  color: var(--text-main);
+}
+.opt:hover { background: var(--opt-hover); border-color: var(--primary); }
+.opt.sel { background: var(--opt-sel-bg); border-color: var(--primary); font-weight: 600; }
+.opt.correct { background: rgba(46, 125, 50, 0.2); border-color: var(--success); }
+.opt.wrong { background: rgba(198, 40, 40, 0.2); border-color: var(--danger); }
+.opt-circle {
+  width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--text-muted);
+  margin-right: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--text-main);
+}
+.opt.sel .opt-circle { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+footer {
+  background: var(--bg-card); padding: 10px; border-top: 1px solid var(--border-color);
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  position: fixed; bottom: 0; width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05); display: none;
+}
+.nav-btn {
+  padding: 12px; border: none; border-radius: 6px;
+  font-weight: bold; color: #fff; cursor: pointer; font-size: 14px;
+}
+.btn-prev { background: #757575; }
+.btn-next { background: var(--primary); }
+.btn-submit { background: var(--success); }
+.btn-palette { background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); grid-column: span 3; }
+
+#palettePanel {
+  position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px;
+  height: 100%; background: var(--palette-bg); z-index: 100;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+  display: flex; flex-direction: column; color: var(--text-main);
+}
+#palettePanel.show { right: 0; }
+.p-header { padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-body); }
+.p-grid { padding: 15px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-content: start; }
+.p-footer { padding: 15px; border-top: 1px solid var(--border-color); }
+
+.qbtn {
+  aspect-ratio: 1; border-radius: 50%; border: none; font-weight: bold; font-size: 12px;
+  cursor: pointer; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
+}
+.qbtn.visited { background: var(--bg-body); border-color: #bbb; } 
+.qbtn.answered { background: var(--success); color: #fff; border: none; }
+/* --- FIXED: Added wrong class for red color in palette --- */
+.qbtn.wrong { background: var(--danger); color: #fff; border: none; }
+.qbtn.review { background: var(--primary-dark); color: #fff; border-radius: 50%; }
+.qbtn.review-ans { background: var(--primary-dark); color: #fff; position: relative; } 
+.qbtn.review-ans::after { content:'✔'; position: absolute; bottom: -2px; right: -2px; font-size: 8px; background: #fff; color:green; border-radius:50%; padding:1px;} 
+.qbtn.current { box-shadow: 0 0 0 2px var(--text-main); transform: scale(1.1); }
+
+#timer { background: var(--bg-card); padding: 5px 10px; border-radius: 4px; font-weight: bold; color: var(--primary); border: 1px solid var(--primary); }
+#expBox { margin-top: 15px; padding: 15px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success); border-radius: 4px; font-size: 14px; display: none; color: var(--text-main); }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; display: none; }
+.overlay.show { display: block; }
+
+#qpModal { 
+  position: fixed; top: 5%; left: 5%; width: 90%; height: 90%; 
+  background: var(--bg-card); color: var(--text-main);
+  z-index: 200; border-radius: 8px; display: none; flex-direction: column; 
+  border: 1px solid var(--border-color);
+}
+.chart-container { width: 100%; max-width: 300px; margin: 0 auto 20px auto; }
+
+/* TELEGRAM POPUP */
+#tgPopup{
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background: var(--bg-card); padding:25px; width:85%; max-width:320px;
+  border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  z-index:9999; text-align:center; display:none; color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+#tgPopup a{ display:block; background:#0088cc; color:#fff; padding:12px; border-radius:8px; text-decoration:none; margin-top:15px; font-weight:bold; }
+.tg-btn-continue { background: var(--bg-body); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; margin-top: 15px; cursor: pointer; font-weight: 600; }
+
+/* ZOOM MODAL */
+#zoomModal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--zoom-bg); z-index: 5000;
+    display: none; justify-content: center; align-items: center;
+    flex-direction: column;
+}
+#zoomImg {
+    max-width: 90%; max-height: 85vh; border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: 1px solid #fff;
+}
+.close-zoom {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 40px; color: var(--text-main); cursor: pointer; font-weight: bold;
+}
+
+/* Result Question Box Styling (for PDF) */
+.result-q-box {
+    margin-bottom: 15px; padding: 10px; border: 1px solid var(--border-color);
+    border-radius: 6px; background: var(--bg-card);
+    page-break-inside: avoid;
+}
+.res-opt {
+    padding: 5px; margin: 2px 0; border-radius: 4px; font-size: 14px;
+}
+.res-opt.c { background: rgba(46, 125, 50, 0.2); border: 1px solid var(--success); }
+.res-opt.w { background: rgba(198, 40, 40, 0.2); border: 1px solid var(--danger); text-decoration: line-through; }
+
+/* Responsive */
+@media(min-width: 768px) {
+  body { grid-template-columns: 1fr 300px; grid-template-rows: auto auto 1fr; }
+  header { grid-column: 1 / -1; }
+  #subHeader { grid-column: 1 / 2; }
+  #mainArea { grid-column: 1 / 2; grid-row: 3 / 4; padding-bottom: 20px; }
+  #palettePanel {
+    position: static; width: auto; height: auto; right: auto;
+    grid-column: 2 / 3; grid-row: 2 / 4;
+    border-left: 1px solid var(--border-color); box-shadow: none; z-index: 1;
+  }
+  footer {
+    grid-column: 1 / 2; position: static;
+    display: flex; justify-content: space-between;
+    box-shadow: none; border-top: 1px solid var(--border-color);
+  }
+  .btn-palette { display: none; } 
+  .p-grid { grid-template-columns: repeat(4, 1fr); }
+  #qpModal { width: 60%; left: 20%; }
+}
+</style>
+</head>
+
+<body onload="initApp()">
+
+<div id="zoomModal" onclick="closeZoom()">
+    <span class="close-zoom">&times;</span>
+    <img id="zoomImg" src="">
+    <div style="color:var(--text-main); margin-top:10px;">Click anywhere to close</div>
+</div>
+
+<div id="startScreen" class="full-screen-overlay">
+    <div class="start-card">
+        <h2 style="color:var(--primary); margin-top:0;">Sectional Mock Test</h2>
+        <p style="color:var(--text-muted)">Please enter your name to proceed.</p>
+        <input type="text" id="startNameInput" class="start-input" placeholder="Enter Full Name">
+        <button class="primary-btn" onclick="goToInstructions()">NEXT</button>
+    </div>
+</div>
+
+<div id="instScreen" class="full-screen-overlay" style="display:none;">
+    <div class="start-card" style="max-width:600px; text-align:left;">
+        <h3 style="color:var(--primary); border-bottom:1px solid var(--border-color); padding-bottom:10px;">General Instructions</h3>
+        <div class="inst-list">
+            <b>Subject: English Language (Single Section)</b><br>
+            <b>Marking Scheme:</b>
+            <ul>
+                <li style="color:var(--success)">Correct Answer: +1 Mark</li>
+                <li style="color:var(--danger)">Wrong Answer: -0.25 Mark</li>
+            </ul>
+        </div>
+        <label style="display:flex; align-items:center; cursor:pointer; font-weight:600; font-size:14px; margin-top:20px;">
+            <input type="checkbox" id="instCheck" onchange="toggleStartBtn()" style="width:20px; height:20px; margin-right:10px;">
+            I have read and understood the instructions.
+        </label>
+        <br>
+        <button id="finalStartBtn" class="primary-btn" onclick="startTestFlow()" disabled>I AM READY TO BEGIN</button>
+    </div>
+</div>
+
+<div id="resumeScreen" class="full-screen-overlay" style="display:none;">
+    <div class="start-card">
+        <h3 style="color:var(--primary);">Test In Progress Found</h3>
+        <p style="color:var(--text-muted);">We found a previous unfinished session for <b id="resumeName"></b>.</p>
+        <div style="background:var(--bg-body); padding:10px; margin:10px 0; border-radius:5px;">
+            <small>Last active: <span id="resumeTime"></span> mins elapsed</small>
+        </div>
+        <button class="primary-btn" onclick="resumeTest()">RESUME SESSION</button>
+        <button class="secondary-btn" onclick="startNewTest()">START FRESH</button>
+    </div>
+</div>
+
+<div id="tgPopup">
+ <b>📢 Join DSSSB Smart Notes</b><br><br>
+ Daily CBT Tests • PDFs • Results
+ <a href="https://t.me/DSSSBSmartNotes" target="_blank">Join Telegram</a><br>
+ <button class="tg-btn-continue" onclick="closeTg()">Continue Test</button>
+</div>
+
+<div class="overlay" onclick="togglePalette()" id="bgOverlay"></div>
+
+<header>
+  <div class="brand">DSSSB Mock <span style="font-size:0.8em; color:var(--text-muted)">v2.7</span></div>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <div id="timer">00:00</div>
+    <button class="tool-btn" onclick="pauseTest()" style="color:var(--warning); border-color:var(--warning)">⏸ Pause</button>
+    <button class="tool-btn" onclick="toggleDarkMode()" id="themeBtn">🌙</button>
+    <button class="tool-btn" onclick="toggleLang()" id="langBtn">EN/HI</button>
+    <button class="tool-btn" onclick="toggleFS()">⛶</button>
+    <button class="tool-btn" onclick="openQP()">📄 Paper</button>
+  </div>
+</header>
+
+<div id="subHeader">English Language</div>
+
+<div id="mainArea">
+  <input type="hidden" id="stuName">
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px; color:var(--text-muted); font-size:13px;">
+      <span>Question No. <b id="qNumDisp">1</b></span>
+      <span style="display:flex; gap:10px;">
+        <span style="color:var(--success)">+1.00</span>
+        <span style="color:var(--danger)">-0.25</span>
+      </span>
+    </div>
+    <div style="font-size:14px; text-align:right; margin-bottom:5px;">
+        <button class="tool-btn" onclick="changeFont(1)">A+</button>
+        <button class="tool-btn" onclick="changeFont(-1)">A-</button>
+    </div>
+    <div id="qContent"></div> 
+    <div id="opts"></div>      
+    <div style="display:flex; gap:10px; margin-top:15px; border-top:1px solid var(--border-color); padding-top:15px;">
+        <button class="tool-btn" style="color:orange; border:1px solid orange; background:var(--bg-card)" onclick="markReview()">⭐ Mark for Review</button>
+        <button class="tool-btn" style="color:var(--text-muted);" onclick="clearResponse()">Borrar (Clear)</button>
+    </div>
+    <div id="expBox"></div>
+    <button id="expBtn" onclick="toggleExp()" style="width:100%; padding:10px; margin-top:10px; background:var(--primary); border:none; border-radius:4px; display:none; color:#fff; font-weight:bold;">View Solution</button>
+  </div>
+</div>
+
+<div id="palettePanel">
+  <div class="p-header">
+    <b>Question Palette</b>
+    <button onclick="togglePalette()" style="border:none; background:none; font-size:20px; cursor:pointer; color:var(--text-main)" class="close-pal">&times;</button>
+  </div>
+  <div style="padding:10px; background:var(--bg-card); font-size:12px; display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+    <div style="display:flex; align-items:center; gap:5px;"><div class="qbtn answered" style="width:20px; height:20px;"></div> Answered</div>
+    <div style="display:flex; align-items:center; gap:5px;"><div class="qbtn visited" style="width:20px; height:20px;"></div> Not Answered</div>
+    <div style="display:flex; align-items:center; gap:5px;"><div class="qbtn review" style="width:20px; height:20px;"></div> Mark Review</div>
+    <div style="display:flex; align-items:center; gap:5px;"><div class="qbtn" style="width:20px; height:20px;"></div> Not Visited</div>
+  </div>
+  <div class="p-grid" id="paletteGrid"></div>
+  <div class="p-footer">
+    <button onclick="submitTest()" style="width:100%; padding:12px; background:var(--success); color:#fff; border:none; border-radius:4px; font-weight:bold; font-size:16px;">SUBMIT TEST</button>
+  </div>
+</div>
+
+<footer>
+  <button class="nav-btn btn-palette" onclick="togglePalette()">Grid</button>
+  <button class="nav-btn btn-prev" onclick="prev()">Previous</button>
+  <button class="nav-btn btn-next" onclick="next()">Next</button>
+</footer>
+
+<div id="qpModal">
+    <div style="padding:15px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between;">
+        <b id="modalTitle">Full Question Paper</b>
+        <button onclick="closeQP()" style="border:none; background:none; font-size:20px; color:var(--text-main)">&times;</button>
+    </div>
+    <div id="qpContent" style="padding:20px; overflow-y:auto; flex:1;"></div>
+</div>
+<script>
+/* DATA & CONFIG */
+const SECTION_NAME = "English Language"; 
+const NEGATIVE_MARK = 0.25;
+const TELEGRAM_BOT_TOKEN="8486464606:AAFT_Bd0P2HYqKNPjCm3s7TGgfM4HWmOYvs";
+const TELEGRAM_CHAT_ID="@dsssbcbtresult";
+
+/* UPDATED QUESTIONS WITH TYPO FIX IN Q9 */
+const QUESTIONS = [
+  {
+    "q_hi": "Select the correct form of present tense to fill in the blank.\n\nEvery morning, she ______ a cup of green tea before starting work.",
+    "op_1": "drinking",
+    "op_2": "drank",
+    "op_3": "drunk",
+    "op_4": "drinks",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: drinks</b><br>The phrase 'Every morning' indicates a daily habit or routine. For habitual actions in the present, we use the Simple Present Tense. With the singular subject 'she,' the verb takes 's/es'.<br><br><b>Hindi:</b> 'Every morning' एक आदत (habit) या दिनचर्या दर्शाता है। आदत बताने के लिए Present Indefinite Tense का प्रयोग होता है। एकवचन कर्ता 'She' के साथ verb में 's' जुड़ता है, इसलिए 'drinks' सही है।<br><b>Extra Fact:</b> Key words for Simple Present: Always, often, usually, every day, seldom, never.</div>"
+  },
+  {
+    "q_hi": "Select the most appropriate option to fill in the blank.\n\nHer explanation was so ______ that everyone in the audience could understand even the toughest concept.",
+    "op_1": "lucid",
+    "op_2": "elaborate",
+    "op_3": "obscure",
+    "op_4": "persuasive",
+    "ans": "1",
+    "solution": "<div class='solution-container'><b>Correct Answer: lucid</b><br>The sentence implies the explanation was very clear because everyone understood tough concepts. 'Lucid' means clear and easy to understand.<br><br><b>Hindi:</b> वाक्य का अर्थ है कि व्याख्या इतनी 'स्पष्ट' थी कि सब समझ गए। 'Lucid' का अर्थ 'सुस्पष्ट' (Clear) होता है। 'Obscure' का अर्थ 'अस्पष्ट' होता है जो इसका विलोम है।<br><b>Extra Fact:</b> Synonyms of Lucid: Clear, distinct, intelligible, transparent.</div>"
+  },
+  {
+    "q_hi": "Select the option that can be used as a one-word substitute for the given group of words.\n\nA group of people, typically with vehicles or animals travelling together.",
+    "op_1": "Constellation",
+    "op_2": "Congregation",
+    "op_3": "Horde",
+    "op_4": "Caravan",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: Caravan</b><br>A 'Caravan' is a group of people, especially traders or pilgrims, traveling together across a desert or hostile territory.<br><br><b>Hindi:</b> यात्रियों, व्यापारियों या पशुओं के समूह को जो एक साथ यात्रा करते हैं, उन्हें 'Caravan' (काफिला) कहते हैं।<br><b>Extra Fact:</b> Congregation: A group of people assembled for religious worship.<br>Constellation: A group of stars.</div>"
+  },
+  {
+    "q_hi": "Arrange the parts in the correct order to form a meaningful and coherent sentence.\n\nS1. Diabetes has long been\nP. a silent epidemic,\nQ. but its roots often\nR. affecting millions worldwide,\nS. than commonly recognised\nT. lie much earlier",
+    "op_1": "PQRST",
+    "op_2": "PSQTR",
+    "op_3": "PTSQR",
+    "op_4": "PRQTS",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: PRQTS</b><br>The logical flow is: Diabetes is a silent epidemic (P) -> affecting millions (R) -> but its roots (Q) -> lie much earlier (T) -> than recognized (S).<br><br><b>Hindi:</b> सही क्रम है: 'Diabetes has long been a silent epidemic (P), affecting millions worldwide (R), but its roots often (Q) lie much earlier (T) than commonly recognised (S).'<br><b>Extra Fact:</b> When rearranging, look for connecting pairs. Here, 'roots... lie' (Subject-Verb) and 'earlier... than' (Comparative degree) are strong links.</div>"
+  },
+  {
+    "q_hi": "Select the most appropriate option to fill in the blank.\n\nShe explained the historical event ______, allowing the audience to imagine the entire scene.",
+    "op_1": "faintly",
+    "op_2": "vividly",
+    "op_3": "dimly",
+    "op_4": "weakly",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: vividly</b><br>To 'imagine the entire scene,' the description must be clear and lively. 'Vividly' means in a way that produces powerful feelings or strong, clear images in the mind.<br><br><b>Hindi:</b> पूरे दृश्य की कल्पना करने के लिए वर्णन 'जीवंत' होना चाहिए। 'Vividly' का अर्थ है 'सजीव या स्पष्ट रूप से'।<br><b>Extra Fact:</b> Antonyms of Vivid: Vague, dull, blurry, dim.</div>"
+  },
+  {
+    "q_hi": "Arrange the parts in the correct order to form a meaningful sentence.\n\nS1. Life in India,\n1. a country known for its cultural diversity, bustling cities,\n2. and heritage, where advanced technology and urbanization coexist\n3. and deep-rooted traditions, offers a unique blend of modernity\n4. with age-old customs, festivals, and a strong sense of community",
+    "op_1": "4-3-2-1",
+    "op_2": "1-3-2-4",
+    "op_3": "3-2-4-1",
+    "op_4": "2-1-4-3",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: 1-3-2-4</b><br>'Life in India,' is followed by the appositive describing India: 'a country known for... cities (1)... and deep-rooted traditions (3)... offers a blend of modernity... and heritage (2)... where... coexist with... customs (4).'<br><br><b>Hindi:</b> सही क्रम 1-3-2-4 है। यह वाक्य भारत की विविधता, परंपरा और आधुनिकता के मिश्रण का वर्णन करता है।<br><b>Extra Fact:</b> 'Coexist' is almost always followed by the preposition 'with' (Coexist with). This links part 2 to part 4.</div>"
+  },
+  {
+    "q_hi": "Arrange the parts in the correct order to form a meaningful sentence.\n\nP) the entire film crew landed safely\nQ) as per reports, the flight departed from Delhi\nR) turbulence caused by heavy rains; fortunately,\nS) airport at 5.25 P.M. and encountered",
+    "op_1": "RSPQ",
+    "op_2": "QSRP",
+    "op_3": "SQPR",
+    "op_4": "PSQR",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: QSRP</b><br>The flight departed (Q) -> from Delhi airport (S) -> and encountered turbulence (R) -> fortunately... landed safely (P).<br><br><b>Hindi:</b> उड़ान दिल्ली से रवाना हुई (Q), एयरपोर्ट से (S), खराब मौसम का सामना किया (R), और अंत में सुरक्षित उतर गई (P)।<br><b>Extra Fact:</b> Look for the Subject-Verb agreement. 'Flight (Subject) ... departed (Verb)'.</div>"
+  },
+  {
+    "q_hi": "Select the most appropriate option to fill in the blank.\n\nThe mountain trail was ______, making it dangerous for beginners.",
+    "op_1": "broad",
+    "op_2": "steep",
+    "op_3": "tiny",
+    "op_4": "large",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: steep</b><br>A 'steep' trail (rising or falling sharply) is physically difficult and dangerous for beginners. Broad or large trails are usually safer.<br><br><b>Hindi:</b> 'Steep' का अर्थ है 'खड़ी ढलान'। पहाड़ों पर खड़ी ढलान ही रास्ते को खतरनाक बनाती है।<br><b>Extra Fact:</b> Collocations: Steep slope, steep hill, steep price (expensive).</div>"
+  },
+  {
+    "q_hi": "Select the option that can be used as a one-word substitute for the given phrase.\n\nA belief that pleasure or happiness is the highest good in life.",
+    "op_1": "Epicureanism",
+    "op_2": "Nihilism",
+    "op_3": "Egotism",
+    "op_4": "Hedonism",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: Hedonism</b><br>Hedonism is the school of thought that argues that the pursuit of pleasure and intrinsic goods are the primary or most important goals of human life.<br><br><b>Hindi:</b> वह सिद्धांत जो सुख (pleasure) को ही जीवन का परम लक्ष्य मानता है, उसे 'Hedonism' (सुखवाद) कहते हैं।<br><b>Extra Fact:</b> Nihilism: The rejection of all religious and moral principles; belief that life is meaningless.<br>Egotism: Being excessively conceited or absorbed in oneself.</div>"
+  },
+  {
+    "q_hi": "Select the option that can be used as a one-word substitute for the given phrase.\n\nA government ruled by religious leaders.",
+    "op_1": "Oligarchy",
+    "op_2": "Democracy",
+    "op_3": "Autocracy",
+    "op_4": "Theocracy",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: Theocracy</b><br>'Theocracy' comes from 'Theos' (God) + 'cracy' (rule). It refers to a system of government in which priests rule in the name of God.<br><br><b>Hindi:</b> धार्मिक नेताओं द्वारा चलाए जाने वाले शासन को 'Theocracy' (धर्मतंत्र) कहते हैं।<br><b>Extra Fact:</b> Oligarchy: Rule by a few people.<br>Autocracy: Rule by one person with absolute power.</div>"
+  },
+  {
+    "q_hi": "Select the most appropriate option to fill in the blank.\n\nThe kitten was so ______ that everyone wanted to hold it.",
+    "op_1": "horrible",
+    "op_2": "angry",
+    "op_3": "strange",
+    "op_4": "cute",
+    "ans": "4",
+    "solution": "<div class='solution-container'><b>Correct Answer: cute</b><br>People generally want to hold something that is adorable or charming. 'Cute' fits this context perfectly.<br><br><b>Hindi:</b> बिल्ली का बच्चा इतना 'प्यारा' (cute) था कि हर कोई उसे पकड़ना चाहता था।<br><b>Extra Fact:</b> This is a logic-based vocabulary question. The reaction (wanting to hold) determines the adjective.</div>"
+  },
+  {
+    "q_hi": "Select the option that can be used as a one-word substitute for the underlined group of words.\n\nThe company reduced staff to cut down expenses.",
+    "op_1": "deflect",
+    "op_2": "revoke",
+    "op_3": "retrench",
+    "op_4": "curtail",
+    "ans": "3",
+    "solution": "<div class='solution-container'><b>Correct Answer: retrench</b><br>'Retrench' means to reduce costs or spending in response to economic difficulty, often by cutting staff.<br><br><b>Hindi:</b> खर्च कम करने के लिए कर्मचारियों की छंटनी करने को 'Retrench' कहते हैं।<br><b>Extra Fact:</b> Curtail: To reduce in extent or quantity (general restriction).<br>Revoke: To put an end to the validity or operation of (a decree, decision, or promise).</div>"
+  },
+  {
+    "q_hi": "Select the most appropriate option to fill in the blank.\n\nThe professor delivered a lecture so ______ that even the most inattentive students listened with complete focus.",
+    "op_1": "tedious",
+    "op_2": "captivating",
+    "op_3": "ordinary",
+    "op_4": "monotonous",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: captivating</b><br>If inattentive students listened with focus, the lecture must have been very interesting. 'Captivating' means capable of attracting and holding interest.<br><br><b>Hindi:</b> 'Captivating' का अर्थ है 'मनमोहक' या 'दिलचस्प'। यदि लापरवाह छात्र भी ध्यान से सुन रहे थे, तो लेक्चर दिलचस्प ही होगा।<br><b>Extra Fact:</b> Tedious and Monotonous are synonyms meaning boring/dull.</div>"
+  },
+  {
+    "q_hi": "Arrange the parts in the correct order to form a meaningful sentence.\n\nA. connect people and things across the world\nB. digital technologies have evolved from stand-alone projects\nC. and help address personal and global challenges\nD. to networks of tools and programmes that",
+    "op_1": "DACB",
+    "op_2": "ABDC",
+    "op_3": "BDAC",
+    "op_4": "CDAB",
+    "ans": "3",
+    "solution": "<div class='solution-container'><b>Correct Answer: BDAC</b><br>Start with the Subject (B): 'Digital technologies have evolved...'. Evolved from what to what? 'From stand-alone projects... to networks...' (D). What do these networks do? 'That connect people...' (A) 'and help address...' (C).<br><br><b>Hindi:</b> सही क्रम है: डिजिटल तकनीकें प्रोजेक्ट्स से विकसित होकर (B) टूल्स के नेटवर्क बनी हैं (D) जो लोगों को जोड़ते हैं (A) और चुनौतियों को हल करते हैं (C)।<br><b>Extra Fact:</b> 'From... to...' is a common correlative structure used here to link parts B and D.</div>"
+  },
+  {
+    "q_hi": "Arrange the parts in the correct order to form a meaningful sentence.\n\nmiddle class / population / along / increasing / is / coastlines",
+    "op_1": "Middle class population is increasing along coastlines",
+    "op_2": "Population is increasing along middle class coastlines.",
+    "op_3": "Along middle coastlines class population is increasing.",
+    "op_4": "Class population is increasing along middle coastlines.",
+    "ans": "1",
+    "solution": "<div class='solution-container'><b>Correct Answer: Middle class population is increasing along coastlines</b><br>Subject: Middle class population. Verb: is increasing. Prepositional Phrase: along coastlines.<br><br><b>Hindi:</b> सही वाक्य विन्यास है: Subject + Verb + Object/Complement. 'Middle class population (Subject) is increasing (Verb) along coastlines.'<br><b>Extra Fact:</b> 'Middle class' functions as an adjective modifying 'population'.</div>"
+  },
+  {
+    "q_hi": "Passage:\nWhen Tom planned a holiday to England, he wrote to a friend in London, asking him to meet him at the airport. The friend replied that he would be there. However, when Tom arrived, his friend was nowhere to be seen. Surprised, Tom wandered around for a while and, feeling a slight headache, went into the restaurant for a cup of strong black coffee. Feeling better, he bought some magazines and sat in the lounge, though he began to get a little worried about his friend's absence. Just as he started reading, his friend finally arrived with a young lady and apologised for being late. He explained that he had first arranged to meet the young lady at six o'clock outside the underground station near his home. Since she was unfamiliar with the underground, she accidentally boarded a train going in the wrong direction. The train was crowded, and she could not see the station names, so she traveled several stops before realising her mistake. By the time she corrected it and reached the correct station, she was about forty-five minutes late. This delay caused Tom's friend to be late to the airport as well.\n\nQ.16 What did Tom do when he felt a slight headache at the airport?",
+    "op_1": "Bought a magazine and sat in the lounge reading it",
+    "op_2": "Stood and chatting on phone until his friend arrived",
+    "op_3": "Went to the restaurant to had a strong black coffee",
+    "op_4": "Sat in the lounge and waiting for his friend to meet",
+    "ans": "3",
+    "solution": "<div class='solution-container'><b>Correct Answer: Went to the restaurant to had a strong black coffee</b><br>The passage explicitly states: '...feeling a slight headache, went into the restaurant for a cup of strong black coffee.'<br><br><b>Hindi:</b> पैसेज के अनुसार, सिरदर्द होने पर टॉम रेस्तरां में ब्लैक कॉफी पीने गया।<br><b>Extra Fact:</b> Always rely only on the text provided in the passage, even if other options seem logical in real life.</div>"
+  },
+  {
+    "q_hi": "Passage:\nWhen Tom planned a holiday to England, he wrote to a friend in London, asking him to meet him at the airport. The friend replied that he would be there. However, when Tom arrived, his friend was nowhere to be seen. Surprised, Tom wandered around for a while and, feeling a slight headache, went into the restaurant for a cup of strong black coffee. Feeling better, he bought some magazines and sat in the lounge, though he began to get a little worried about his friend's absence. Just as he started reading, his friend finally arrived with a young lady and apologised for being late. He explained that he had first arranged to meet the young lady at six o'clock outside the underground station near his home. Since she was unfamiliar with the underground, she accidentally boarded a train going in the wrong direction. The train was crowded, and she could not see the station names, so she traveled several stops before realising her mistake. By the time she corrected it and reached the correct station, she was about forty-five minutes late. This delay caused Tom's friend to be late to the airport as well.\n\nQ.17 What was Tom doing when his friend finally arrived?",
+    "op_1": "Drinking coffee",
+    "op_2": "Waiting at the entrance",
+    "op_3": "Reading a magazine",
+    "op_4": "Walking around",
+    "ans": "3",
+    "solution": "<div class='solution-container'><b>Correct Answer: Reading a magazine</b><br>The text says: 'Just as he started reading, his friend finally arrived...'<br><br><b>Hindi:</b> जब उसका दोस्त आया, तब टॉम मैगजीन पढ़ रहा था।<br><b>Extra Fact:</b> Pay attention to time markers like 'Just as'.</div>"
+  },
+  {
+    "q_hi": "Passage:\nWhen Tom planned a holiday to England, he wrote to a friend in London, asking him to meet him at the airport. The friend replied that he would be there. However, when Tom arrived, his friend was nowhere to be seen. Surprised, Tom wandered around for a while and, feeling a slight headache, went into the restaurant for a cup of strong black coffee. Feeling better, he bought some magazines and sat in the lounge, though he began to get a little worried about his friend's absence. Just as he started reading, his friend finally arrived with a young lady and apologised for being late. He explained that he had first arranged to meet the young lady at six o'clock outside the underground station near his home. Since she was unfamiliar with the underground, she accidentally boarded a train going in the wrong direction. The train was crowded, and she could not see the station names, so she traveled several stops before realising her mistake. By the time she corrected it and reached the correct station, she was about forty-five minutes late. This delay caused Tom's friend to be late to the airport as well.\n\nQ.18 The structure of the passage can best be described as:",
+    "op_1": "a narrative of an incident, followed by the reason behind it",
+    "op_2": "a scientific explanation followed by supporting evidence",
+    "op_3": "a comparison between two journeys with their outcomes",
+    "op_4": "a description of a place with detailed observations",
+    "ans": "1",
+    "solution": "<div class='solution-container'><b>Correct Answer: a narrative of an incident, followed by the reason behind it</b><br>The first half tells the story of Tom waiting (the incident/narrative). The second half explains why the friend was late (the reason: the lady's train mistake).<br><br><b>Hindi:</b> पैसेज पहले एक घटना (टॉम का इंतजार) बताता है, और फिर उसके पीछे का कारण (दोस्त क्यों लेट हुआ) स्पष्ट करता है।<br><b>Extra Fact:</b> Narrative passages often follow a Cause-Effect or Effect-Cause structure. Here it is Effect (Delay) -> Cause (Train mistake).</div>"
+  },
+  {
+    "q_hi": "Passage:\nWhen Tom planned a holiday to England, he wrote to a friend in London, asking him to meet him at the airport. The friend replied that he would be there. However, when Tom arrived, his friend was nowhere to be seen. Surprised, Tom wandered around for a while and, feeling a slight headache, went into the restaurant for a cup of strong black coffee. Feeling better, he bought some magazines and sat in the lounge, though he began to get a little worried about his friend's absence. Just as he started reading, his friend finally arrived with a young lady and apologised for being late. He explained that he had first arranged to meet the young lady at six o'clock outside the underground station near his home. Since she was unfamiliar with the underground, she accidentally boarded a train going in the wrong direction. The train was crowded, and she could not see the station names, so she traveled several stops before realising her mistake. By the time she corrected it and reached the correct station, she was about forty-five minutes late. This delay caused Tom's friend to be late to the airport as well.\n\nQ.19 What is the central theme of the passage?",
+    "op_1": "The excitement of meeting friends after the journey",
+    "op_2": "The insignificance of punctuality and planning",
+    "op_3": "Misunderstandings and small mistakes cause delays",
+    "op_4": "The challenges of traveling in a foreign country",
+    "ans": "3",
+    "solution": "<div class='solution-container'><b>Correct Answer: Misunderstandings and small mistakes cause delays</b><br>The core of the story is how a small mistake (taking the wrong train) led to a series of delays affecting multiple people.<br><br><b>Hindi:</b> मुख्य विषय यह है कि कैसे छोटी गलतफहमियों और गलतियों (जैसे गलत ट्रेन लेना) से देरी हो जाती है।<br><b>Extra Fact:</b> Themes are usually general truths illustrated by the specific story.</div>"
+  },
+  {
+    "q_hi": "Passage:\nWhen Tom planned a holiday to England, he wrote to a friend in London, asking him to meet him at the airport. The friend replied that he would be there. However, when Tom arrived, his friend was nowhere to be seen. Surprised, Tom wandered around for a while and, feeling a slight headache, went into the restaurant for a cup of strong black coffee. Feeling better, he bought some magazines and sat in the lounge, though he began to get a little worried about his friend's absence. Just as he started reading, his friend finally arrived with a young lady and apologised for being late. He explained that he had first arranged to meet the young lady at six o'clock outside the underground station near his home. Since she was unfamiliar with the underground, she accidentally boarded a train going in the wrong direction. The train was crowded, and she could not see the station names, so she traveled several stops before realising her mistake. By the time she corrected it and reached the correct station, she was about forty-five minutes late. This delay caused Tom's friend to be late to the airport as well.\n\nQ.20 Select the option that best represents the tone of the passage.",
+    "op_1": "Suspenseful and anxious",
+    "op_2": "Humourous and light-hearted",
+    "op_3": "Sad and melancholic",
+    "op_4": "Informative and factual",
+    "ans": "2",
+    "solution": "<div class='solution-container'><b>Correct Answer: Humourous and light-hearted</b><br>The tone is casual and storytelling. The mix-up is a classic 'comedy of errors' rather than a serious or sad event. The official answer key also marks this as humorous/light-hearted.<br><br><b>Hindi:</b> पैसेज का स्वर हल्का-फुल्का (light-hearted) है। यह एक साधारण यात्रा की गलती है, कोई गंभीर घटना नहीं।<br><b>Extra Fact:</b> Tone analysis requires looking at adjectives and the outcome. No one was hurt, and the problem was resolved, suggesting a light tone.</div>"
+  }
+];
+
+/* STATE */
+let currentIdx = 0;
+let currentLang = "EN"; // Default
+let answers = new Array(QUESTIONS.length).fill(null);
+let reviewStatus = new Array(QUESTIONS.length).fill(false);
+let visitedStatus = new Array(QUESTIONS.length).fill(false);
+let submitted = false;
+let timeElapsed = 0;
+let fontSize = 16;
+let isDarkMode = false;
+let timerInterval;
+
+/* INIT LOGIC */
+function initApp() {
+    if(localStorage.getItem('dsssb_dark_mode') === 'true') toggleDarkMode();
+    const saved = localStorage.getItem('dsssb_cbt_state_eng');
+    if(saved) {
+        const s = JSON.parse(saved);
+        if(s.submitted) { 
+            document.getElementById('startScreen').style.display = 'flex';
+        } else {
+            document.getElementById('resumeName').innerText = s.name || "Student";
+            document.getElementById('resumeTime').innerText = Math.floor((s.time || 0) / 60);
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('resumeScreen').style.display = 'flex';
+        }
+    } else {
+        document.getElementById('startScreen').style.display = 'flex';
+    }
+}
+
+function startNewTest() { localStorage.removeItem('dsssb_cbt_state_eng'); location.reload(); }
+function resumeTest() { document.getElementById('resumeScreen').style.display = 'none'; initExam(); }
+function pauseTest() { if(submitted) return; saveState(); clearInterval(timerInterval); alert("Paused! You can resume later."); location.reload(); }
+
+function goToInstructions() {
+    const name = document.getElementById('startNameInput').value.trim();
+    if(!name) { alert("Enter Name!"); return; }
+    document.getElementById('stuName').value = name;
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('instScreen').style.display = 'flex';
+}
+
+function toggleStartBtn() { document.getElementById('finalStartBtn').disabled = !document.getElementById('instCheck').checked; }
+function startTestFlow() { document.getElementById('instScreen').style.display = 'none'; initExam(); }
+
+function initExam() {
+  document.getElementById('mainArea').style.display = 'block';
+  document.querySelector('footer').style.display = 'flex';
+  document.getElementById('tgPopup').style.display = "block";
+  loadState(); loadQuestion(currentIdx); startTimer();
+  document.addEventListener('keydown', (e) => { if(e.key === "ArrowRight") next(); if(e.key === "ArrowLeft") prev(); });
+}
+
+function closeTg(){ document.getElementById('tgPopup').style.display = "none"; }
+
+/* LOGIC */
+function saveState() {
+  if(submitted) return;
+  const state = {
+    idx: currentIdx, ans: answers, rev: reviewStatus, vis: visitedStatus,
+    time: timeElapsed, name: document.getElementById('stuName').value, submitted: false
+  };
+  localStorage.setItem('dsssb_cbt_state_eng', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('dsssb_cbt_state_eng');
+  if(saved) {
+    const s = JSON.parse(saved);
+    currentIdx = s.idx || 0; answers = s.ans || answers;
+    reviewStatus = s.rev || reviewStatus; visitedStatus = s.vis || visitedStatus;
+    timeElapsed = s.time || 0;
+    document.getElementById('stuName').value = s.name || "";
+  }
+}
+
+function loadQuestion(idx) {
+  currentIdx = idx; visitedStatus[idx] = true; saveState(); 
+  
+  const q = QUESTIONS[idx];
+  document.getElementById('qNumDisp').innerText = idx + 1;
+  
+  // Use 'q_hi' for both languages since the new format implies single language or embedded text
+  const txt = q.q_hi;
+  
+  // Render text
+  const contentDiv = document.getElementById('qContent');
+  contentDiv.innerHTML = txt;
+  contentDiv.style.fontSize = fontSize + "px";
+  
+  // AUTO-ENABLE ZOOM
+  const imgs = contentDiv.querySelectorAll('img');
+  imgs.forEach(img => {
+      img.classList.add('q-img');
+      img.onclick = () => openZoom(img.src);
+  });
+  
+  // Construct Options Array from the new JSON format (op_1, op_2, etc)
+  const optsArr = [q.op_1, q.op_2, q.op_3, q.op_4];
+  
+  // Convert Answer String ("1", "2") to index (0, 1)
+  const correctIdx = parseInt(q.ans) - 1;
+
+  let html = "";
+  optsArr.forEach((opt, i) => {
+    let cls = "opt";
+    if(submitted) { 
+        if(i === correctIdx) cls += " correct"; 
+        else if(answers[idx] === i) cls += " wrong"; 
+    } 
+    else { if(answers[idx] === i) cls += " sel"; }
+    html += `<div class="${cls}" onclick="selectAnswer(${i})"><div class="opt-circle">${String.fromCharCode(65+i)}</div><div>${opt}</div></div>`;
+  });
+  document.getElementById('opts').innerHTML = html;
+  renderPalette();
+  if(window.MathJax) MathJax.typesetPromise();
+  
+  // UPDATED: Use the corrected Toggle Logic helper
+  const expBox = document.getElementById('expBox');
+  expBox.style.display = "none"; // Always hide initially on load
+  
+  if(submitted) {
+    expBox.innerHTML = q.solution || "No explanation.";
+    document.getElementById('expBtn').style.display = "block";
+    // If user was viewing solution, keep it open? (Optional, here we reset to closed)
+  }
+}
+
+/* ZOOM FUNCTIONS */
+function openZoom(src) {
+    document.getElementById('zoomImg').src = src;
+    document.getElementById('zoomModal').style.display = 'flex';
+}
+function closeZoom() {
+    document.getElementById('zoomModal').style.display = 'none';
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid'); grid.innerHTML = "";
+  QUESTIONS.forEach((q, k) => {
+    let cls = "qbtn"; if(k === currentIdx) cls += " current";
+    // Convert Answer "1" to index 0 for comparison
+    const qCorrectIdx = parseInt(q.ans) - 1;
+    
+    if(submitted) { 
+        if(answers[k] === qCorrectIdx) cls += " answered"; // Correct (Green)
+        else if(answers[k] !== null) cls += " wrong"; // Wrong (Red) - NOW WORKS WITH CSS
+    } 
+    else { 
+        if(reviewStatus[k] && answers[k] !== null) cls += " review-ans"; 
+        else if(reviewStatus[k]) cls += " review"; 
+        else if(answers[k] !== null) cls += " answered"; 
+        else if(visitedStatus[k]) cls += " visited"; 
+    }
+    const btn = document.createElement('button'); btn.className = cls; btn.innerText = k + 1;
+    btn.onclick = () => { loadQuestion(k); if(window.innerWidth < 768) togglePalette(); };
+    grid.appendChild(btn);
+  });
+}
+
+function selectAnswer(i) { if(!submitted) { answers[currentIdx] = i; loadQuestion(currentIdx); } }
+function clearResponse() { if(!submitted) { answers[currentIdx] = null; reviewStatus[currentIdx]=false; loadQuestion(currentIdx); } }
+function markReview() { if(!submitted) { reviewStatus[currentIdx] = !reviewStatus[currentIdx]; loadQuestion(currentIdx); } }
+function next() { if(currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1); }
+function prev() { if(currentIdx > 0) loadQuestion(currentIdx - 1); }
+function toggleLang() { currentLang = currentLang === "HI" ? "EN" : "HI"; document.getElementById('langBtn').innerText = currentLang; loadQuestion(currentIdx); }
+function changeFont(d) { fontSize += d; document.getElementById('qContent').style.fontSize = fontSize + "px"; }
+function toggleDarkMode() { isDarkMode = !isDarkMode; document.body.classList.toggle('dark-mode'); document.getElementById('themeBtn').innerText = isDarkMode ? "☀️" : "🌙"; localStorage.setItem('dsssb_dark_mode', isDarkMode); }
+
+/* ================== FIXED TOGGLE FUNCTION ================== */
+function toggleExp() { 
+    const b = document.getElementById('expBox'); 
+    // This checks the *actual* computed style, fixing the double-click bug
+    const isHidden = window.getComputedStyle(b).display === 'none';
+    b.style.display = isHidden ? "block" : "none"; 
+}
+
+/* ================== SUBMIT & RESULT GENERATION ================== */
+function submitTest() {
+  const name = document.getElementById('stuName').value;
+  if(!confirm("Are you sure you want to submit?")) return;
+  
+  submitted = true; clearInterval(timerInterval); localStorage.removeItem('dsssb_cbt_state_eng'); 
+  let scoreData = { c:0, w:0, s:0 };
+  let totalScore = 0;
+
+  QUESTIONS.forEach((q, i) => {
+    const correctIdx = parseInt(q.ans) - 1; // Convert "1" -> 0
+    if(answers[i] === null) { scoreData.s++; }
+    else if(answers[i] === correctIdx) { scoreData.c++; totalScore++; }
+    else { scoreData.w++; totalScore -= NEGATIVE_MARK; }
+  });
+
+  let attempted = scoreData.c + scoreData.w;
+  let accuracy = attempted ? ((scoreData.c/attempted)*100) : 0;
+  let rankScore = (totalScore*100) + accuracy;
+  let estRank = Math.max(1, Math.round(1000 - rankScore));
+  let timeStr = document.getElementById('timer').innerText;
+
+  /* --- 1. SCORE CARD HTML --- */
+  document.getElementById('modalTitle').innerText = "Score Card";
+  let resHTML = `
+  <div style="text-align:center;">
+    <h3>${name}, Test Submitted!</h3>
+    <div style="font-size:24px; color:var(--primary);">Score: <b>${totalScore.toFixed(2)}</b></div>
+    <div class="chart-container"><canvas id="resultChart"></canvas></div>
+  </div>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center; font-size:14px; border-color:var(--border-color); margin-bottom:20px;">
+    <tr style="background:var(--bg-body)"><th>Section</th><th>✅</th><th>❌</th><th>⚪</th></tr>
+    <tr><td>${SECTION_NAME}</td><td style="color:var(--success)">${scoreData.c}</td><td style="color:var(--danger)">${scoreData.w}</td><td>${scoreData.s}</td></tr>
+  </table>`;
+
+  /* --- 2. FULL PAPER HTML --- */
+  resHTML += `<h3 style="border-top:1px solid #ccc; padding-top:20px;">Response Sheet</h3>`;
+  QUESTIONS.forEach((q, i) => {
+      const correctIdx = parseInt(q.ans) - 1; // Convert "1" -> 0
+      const isCorrect = answers[i] === correctIdx;
+      const statusColor = answers[i] === null ? '#999' : (isCorrect ? 'green' : 'red');
+      const statusText = answers[i] === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Wrong');
+      const qText = q.q_hi;
+      const opts = [q.op_1, q.op_2, q.op_3, q.op_4]; // Manual array construction
+      const exp = q.solution || "No explanation";
+
+      resHTML += `<div class="result-q-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <b>Q.${i+1}</b>
+            <b style="color:${statusColor}">${statusText}</b>
+        </div>
+        <div style="margin-bottom:10px;">${qText}</div>
+        <div>`;
+       
+      opts.forEach((opt, k) => {
+          let optClass = "res-opt";
+          if(k === correctIdx) optClass += " c"; // Correct Answer
+          if(k === answers[i] && k !== correctIdx) optClass += " w"; // User Wrong Answer
+          resHTML += `<div class="${optClass}">${String.fromCharCode(65+k)}. ${opt}</div>`;
+      });
+      
+      // Use innerHTML for explanation to render boxes
+      resHTML += `</div><div style="margin-top:5px; font-size:13px; color:#555; background:#f9f9f9; padding:5px;"><b>Exp:</b> ${exp}</div></div>`;
+  });
+
+  /* --- 3. ACTION BUTTONS --- */
+  resHTML += `
+  <div style="display:flex; gap:10px; justify-content:center; padding-bottom:30px;">
+    <button class="tool-btn" onclick="downloadPDF()" style="background:var(--primary); color:#fff; border:none; padding:10px 20px;">📥 Download Result</button>
+    <button class="tool-btn" onclick="location.reload()" style="background:var(--success); color:#fff; border:none; padding:10px 20px;">Restart Test</button>
+  </div>`;
+
+  document.getElementById('qpContent').innerHTML = resHTML;
+  document.getElementById('qpModal').style.display = "flex";
+  
+  renderChart(scoreData.c, scoreData.w, scoreData.s);
+  if(window.MathJax) MathJax.typesetPromise();
+  sendResultToTelegram(name, totalScore.toFixed(2), scoreData.c, scoreData.w, scoreData.s, timeStr, accuracy, estRank);
+  loadQuestion(currentIdx);
+}
+
+function renderChart(c, w, s) {
+    const ctx = document.getElementById('resultChart').getContext('2d');
+    const txtColor = isDarkMode ? '#e0e0e0' : '#333';
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Correct', 'Wrong', 'Skipped'], datasets: [{ data: [c, w, s], backgroundColor: ['#2e7d32', '#c62828', '#bdbdbd'], borderWidth: 0 }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: txtColor } } } }
+    });
+}
+
+function downloadPDF() {
+    const element = document.getElementById('qpContent');
+    const btns = element.querySelectorAll('button');
+    btns.forEach(b => b.style.display = 'none'); // Hide buttons
+    const opt = {
+        margin: 5, filename: 'Sectional_Mock_Result.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save().then(() => {
+        btns.forEach(b => b.style.display = 'inline-block'); // Show buttons
+    });
+}
+
+function sendResultToTelegram(name,score,c,w,s,time,accuracy,estRank){
+ fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
+  method:"POST", headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   chat_id:TELEGRAM_CHAT_ID,
+   text:`📘 DSSSB Sectional Mock (English)\n\n👤 Name: ${name}\n⏱ Time: ${time}\n✅ Correct: ${c}\n❌ Wrong: ${w}\n➖ Skipped: ${s}\n🎯 Score: ${score}\n📊 Accuracy: ${accuracy.toFixed(2)}%\n\n🔥 DSSSB Smart Notes`
+  })
+ });
+}
+
+/* UTILS */
+function startTimer() {
+  if(timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeElapsed++;
+    const m = Math.floor(timeElapsed / 60).toString().padStart(2, '0');
+    const s = (timeElapsed % 60).toString().padStart(2, '0');
+    document.getElementById('timer').innerText = `${m}:${s}`;
+  }, 1000);
+}
+function togglePalette() { document.getElementById('palettePanel').classList.toggle('show'); document.getElementById('bgOverlay').classList.toggle('show'); }
+function toggleFS() { !document.fullscreenElement ? document.documentElement.requestFullscreen() : document.exitFullscreen(); }
+function openQP() {
+  document.getElementById('modalTitle').innerText = "Full Question Paper";
+  let html = "";
+  QUESTIONS.forEach((q, i) => {
+    // Construct manual options array
+    const opts = [q.op_1, q.op_2, q.op_3, q.op_4];
+    html += `<div style="margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:10px;">
+        <b>Q.${i+1}</b><br>${q.q_hi}<br>
+        <i style="color:var(--text-muted); font-size:0.9em">Options: ${opts.join(', ')}</i>
+    </div>`;
+  });
+  document.getElementById('qpContent').innerHTML = html;
+  document.getElementById('qpModal').style.display = "flex";
+}
+function closeQP() { document.getElementById('qpModal').style.display = "none"; }
+</script>
+</body>
+</html>
